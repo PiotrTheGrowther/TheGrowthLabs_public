@@ -1,0 +1,30 @@
+<section class="snap section-metric" data-section-type="metric">
+  <div class="container metric-grid">
+    <span class="kicker metric-kicker">{{KICKER_LABEL}}</span>
+    <div class="metric-figure">{{BIG_NUMBER}}</div>
+    <div class="metric-label">{{LABEL_LINE}}</div>
+    <p class="metric-context">{{CONTEXT_LINE}}</p>
+  </div>
+</section>
+
+<style>
+.section-metric { background: var(--fg); color: var(--bg); }
+.section-metric .metric-grid { display: grid; gap: var(--space-3); justify-items: start; }
+.section-metric .metric-kicker { color: var(--accent); }
+.section-metric .metric-figure {
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 28vw, 22rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--accent);
+}
+.section-metric .metric-label {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 3.5rem);
+  max-width: 22ch;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.section-metric .metric-context { color: rgba(244,240,232,0.6); max-width: 55ch; }
+</style>

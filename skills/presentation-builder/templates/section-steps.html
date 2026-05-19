@@ -1,0 +1,57 @@
+<section class="snap section-steps" data-section-type="steps">
+  <div class="container">
+    <div class="steps-header">
+      <span class="kicker">{{KICKER_LABEL}}</span>
+      <h2>{{TITLE}}</h2>
+    </div>
+    <ol class="steps-list">
+      <li class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>{{STEP_1_TITLE}}</h3>
+          <p>{{STEP_1_DETAIL}}</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>{{STEP_2_TITLE}}</h3>
+          <p>{{STEP_2_DETAIL}}</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>{{STEP_3_TITLE}}</h3>
+          <p>{{STEP_3_DETAIL}}</p>
+        </div>
+      </li>
+      <!-- repeat up to 7 steps -->
+    </ol>
+  </div>
+</section>
+
+<style>
+.section-steps .steps-header { display: grid; gap: var(--space-2); margin-bottom: var(--space-4); }
+.section-steps .steps-header h2 { max-width: 22ch; }
+.section-steps .steps-list { list-style: none; display: grid; gap: var(--space-2); }
+.section-steps .step {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.section-steps .step:last-child { border-bottom: 1px solid var(--line); }
+.section-steps .step-num {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  padding-top: 0.4rem;
+}
+.section-steps .step-body { display: grid; gap: 0.5rem; }
+.section-steps .step-body h3 { font-size: clamp(1.25rem, 2.2vw, 1.75rem); }
+.section-steps .step-body p { color: var(--muted); }
+</style>

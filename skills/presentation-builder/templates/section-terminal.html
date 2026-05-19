@@ -1,0 +1,61 @@
+<section class="snap section-terminal" data-section-type="terminal">
+  <div class="container">
+    <span class="kicker">{{KICKER_LABEL}}</span>
+    <h2 class="term-title">{{TITLE}}</h2>
+    <div class="term-window">
+      <div class="term-bar">
+        <span class="term-dot dot-r"></span>
+        <span class="term-dot dot-y"></span>
+        <span class="term-dot dot-g"></span>
+        <span class="term-name">{{WINDOW_NAME}}</span>
+      </div>
+      <pre class="term-body"><code>{{TERMINAL_CONTENT}}</code></pre>
+    </div>
+  </div>
+</section>
+
+<style>
+.section-terminal .term-title { max-width: 22ch; margin-bottom: var(--space-3); }
+.section-terminal .term-window {
+  background: #0d0d0d;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 24px 80px -20px rgba(0,0,0,0.4);
+  max-width: 920px;
+}
+.section-terminal .term-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: #1a1a1a;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.section-terminal .term-dot { width: 12px; height: 12px; border-radius: 50%; }
+.section-terminal .dot-r { background: #ff5f57; }
+.section-terminal .dot-y { background: #febc2e; }
+.section-terminal .dot-g { background: #28c840; }
+.section-terminal .term-name {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  margin-left: 0.5rem;
+}
+.section-terminal .term-body {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  color: #e8e8e6;
+  padding: var(--space-3);
+  overflow-x: auto;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.section-terminal .term-body::after {
+  content: '▋';
+  color: var(--accent);
+  animation: term-blink 1s step-end infinite;
+}
+@keyframes term-blink { 50% { opacity: 0; } }
+</style>

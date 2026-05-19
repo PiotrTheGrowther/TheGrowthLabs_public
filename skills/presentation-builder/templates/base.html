@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DECK_TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- replace below with chosen aesthetic's font pairing -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ THEME VARIABLES (set by aesthetic) ============ */
+:root {
+  --bg: #f4f0e8;
+  --fg: #0a0a0a;
+  --accent: #c44116;
+  --muted: #8c8678;
+  --line: rgba(10,10,10,0.12);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter Tight', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 4rem;
+  --space-8: 8rem;
+
+  --maxw: 1280px;
+}
+
+/* ============ RESET ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.5;
+  overflow-y: scroll;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ============ SECTION SCAFFOLD ============ */
+section.snap {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+section.snap > .container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+/* Reveal animation - children hidden until section is in view */
+section.snap > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+}
+section.snap.in-view > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+section.snap.in-view > *:nth-child(2) { transition-delay: 100ms; }
+section.snap.in-view > *:nth-child(3) { transition-delay: 200ms; }
+section.snap.in-view > *:nth-child(4) { transition-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  section.snap > * { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ============ TYPOGRAPHY ============ */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+h1 { font-size: clamp(3rem, 8vw, 7rem); }
+h2 { font-size: clamp(2rem, 5vw, 4rem); }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); letter-spacing: -0.015em; }
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+p { max-width: 65ch; }
+
+/* ============ NAV RAIL ============ */
+.nav-rail {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 50;
+}
+.nav-rail button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--muted);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity .25s, transform .25s;
+}
+.nav-rail button.active { opacity: 1; transform: scale(1.6); background: var(--accent); }
+.nav-rail button:hover { opacity: 1; }
+@media (max-width: 768px) { .nav-rail { display: none; } }
+
+/* ============ SCROLL PROGRESS BAR ============ */
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 60;
+  transition: width 0.1s linear;
+}
+
+{{SECTION_STYLES}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<nav class="nav-rail" id="navRail"></nav>
+<main id="deck">
+{{SECTIONS}}
+</main>
+<script>
+(function() {
+  const sections = document.querySelectorAll('section.snap');
+  const navRail = document.getElementById('navRail');
+  const progress = document.getElementById('progress');
+
+  // build nav dots
+  sections.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Go to section ' + (i + 1));
+    b.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+    navRail.appendChild(b);
+  });
+  const dots = navRail.querySelectorAll('button');
+
+  // reveal + active dot via IntersectionObserver
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        const idx = [...sections].indexOf(e.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => io.observe(s));
+
+  // scroll progress
+  document.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  }, { passive: true });
+
+  // keyboard nav
+  document.addEventListener('keydown', (e) => {
+    const active = [...dots].findIndex(d => d.classList.contains('active'));
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      sections[Math.min(active + 1, sections.length - 1)].scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      sections[Math.max(active - 1, 0)].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+})();
+</script>
+</body>
+</html>

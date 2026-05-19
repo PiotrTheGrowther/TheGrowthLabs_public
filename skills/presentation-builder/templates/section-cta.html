@@ -1,0 +1,63 @@
+<section class="snap section-cta" data-section-type="cta">
+  <div class="cta-bg" aria-hidden="true"></div>
+  <div class="container cta-grid">
+    <span class="kicker">{{KICKER_LABEL}}</span>
+    <h2 class="cta-headline">{{HEADLINE}}</h2>
+    <p class="cta-sub">{{SUBLINE}}</p>
+    <div class="cta-actions">
+      <a class="cta-btn cta-btn-primary" href="{{CTA_LINK}}">{{CTA_LABEL}} →</a>
+      <a class="cta-btn cta-btn-ghost" href="{{SECONDARY_LINK}}">{{SECONDARY_LABEL}}</a>
+    </div>
+    <div class="cta-foot">
+      <span class="kicker">{{FOOTER_LEFT}}</span>
+      <span class="kicker">{{FOOTER_RIGHT}}</span>
+    </div>
+  </div>
+</section>
+
+<style>
+.section-cta {
+  background: var(--fg);
+  color: var(--bg);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-6);
+}
+.section-cta .cta-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 100%, rgba(196,65,22,0.3), transparent 50%),
+    radial-gradient(ellipse at 80% 0%, rgba(196,65,22,0.15), transparent 50%);
+  pointer-events: none;
+}
+.section-cta .cta-grid { display: grid; gap: var(--space-3); position: relative; }
+.section-cta .cta-headline {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
+}
+.section-cta .cta-headline em { font-style: italic; color: var(--accent); font-weight: 500; }
+.section-cta .cta-sub { color: rgba(244,240,232,0.7); font-size: clamp(1rem, 1.5vw, 1.25rem); max-width: 55ch; }
+.section-cta .cta-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+.section-cta .cta-btn {
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--bg);
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+.section-cta .cta-btn-primary { background: var(--accent); border-color: var(--accent); }
+.section-cta .cta-btn-primary:hover { transform: translateY(-2px); }
+.section-cta .cta-btn-ghost { background: transparent; }
+.section-cta .cta-btn-ghost:hover { background: var(--bg); color: var(--fg); }
+.section-cta .cta-foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-6);
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(244,240,232,0.15);
+}
+.section-cta .cta-foot .kicker { color: rgba(244,240,232,0.5); }
+</style>

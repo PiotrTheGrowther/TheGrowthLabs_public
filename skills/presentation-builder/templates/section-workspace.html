@@ -1,0 +1,41 @@
+<section class="snap section-workspace" data-section-type="workspace">
+  <div class="container ws-grid">
+    <div class="ws-copy">
+      <span class="kicker">{{KICKER_LABEL}}</span>
+      <h2>{{TITLE}}</h2>
+      <p>{{DESCRIPTION}}</p>
+    </div>
+    <div class="ws-tree">
+      <pre><code>{{FOLDER_TREE}}</code></pre>
+    </div>
+  </div>
+</section>
+
+<style>
+.section-workspace .ws-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+.section-workspace .ws-copy { display: grid; gap: var(--space-2); }
+.section-workspace .ws-copy h2 { max-width: 18ch; }
+.section-workspace .ws-copy p { color: var(--muted); }
+.section-workspace .ws-tree {
+  background: rgba(0,0,0,0.04);
+  border: 1px solid var(--line);
+  padding: var(--space-3);
+  overflow-x: auto;
+}
+.section-workspace .ws-tree pre {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  line-height: 1.7;
+  color: var(--fg);
+  white-space: pre;
+}
+.section-workspace .ws-tree code { color: inherit; }
+@media (max-width: 768px) {
+  .section-workspace .ws-grid { grid-template-columns: 1fr; }
+}
+</style>
