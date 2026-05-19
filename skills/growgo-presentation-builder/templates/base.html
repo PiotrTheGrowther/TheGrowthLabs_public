@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DECK_TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============ GROWGO BRAND VARIABLES (LOCKED) ============ */
+:root {
+  --gg-yellow: #FEBF2D;
+  --gg-dark: #1E1E1E;
+  --gg-text: #383838;
+  --gg-text-secondary: #888888;
+  --gg-white: #FFFFFF;
+
+  --gg-bg-light: #EFEFEF;
+  --gg-bg-dark: #1E1E1E;
+  --gg-card-light: #D5D5D5;
+  --gg-card-dark: #2A2A2A;
+  --gg-card-dark-alt: #3A3A3A;
+
+  --gg-green: #259A53;
+  --gg-blue: #52679C;
+  --gg-purple: #9868A9;
+
+  --gg-font: 'Roboto', 'Calibri', 'Arial', sans-serif;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 4rem;
+  --space-8: 8rem;
+
+  --maxw: 1280px;
+
+  --shadow-card: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* ============ RESET ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body {
+  background: var(--gg-bg-light);
+  color: var(--gg-text);
+  font-family: var(--gg-font);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-y: scroll;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ============ SECTION SCAFFOLD ============ */
+section.snap {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--gg-bg-light);
+  color: var(--gg-text);
+}
+section.snap.bg-dark { background: var(--gg-bg-dark); color: var(--gg-white); }
+section.snap.bg-dark h1, section.snap.bg-dark h2, section.snap.bg-dark h3 { color: var(--gg-white); }
+section.snap > .container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+section.snap > * { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(.2,.7,.2,1), transform 0.6s cubic-bezier(.2,.7,.2,1); }
+section.snap.in-view > * { opacity: 1; transform: translateY(0); }
+section.snap.in-view > *:nth-child(2) { transition-delay: 80ms; }
+section.snap.in-view > *:nth-child(3) { transition-delay: 160ms; }
+section.snap.in-view > *:nth-child(4) { transition-delay: 240ms; }
+@media (prefers-reduced-motion: reduce) { section.snap > * { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+/* ============ TYPOGRAPHY ============ */
+h1, h2, h3 { font-family: var(--gg-font); color: var(--gg-dark); line-height: 1.15; text-align: left; }
+h1 { font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 500; }
+p { max-width: 65ch; }
+.kicker {
+  font-family: var(--gg-font);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gg-text-secondary);
+}
+.bg-dark .kicker { color: var(--gg-yellow); }
+
+/* ============ SIGNATURE: YELLOW HIGHLIGHT ============ */
+.hl {
+  background: var(--gg-yellow);
+  color: var(--gg-dark);
+  padding: 0.05em 0.25em;
+  border-radius: 2px;
+  display: inline-block;
+  line-height: 1.05;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ============ BRAND MARK (logo container) ============ */
+.brand-mark { display: block; margin-bottom: var(--space-4); }
+.brand-mark svg { width: 130px; height: 40px; }
+
+/* ============ NAV RAIL ============ */
+.nav-rail {
+  position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 0.75rem; z-index: 50;
+}
+.nav-rail button {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gg-text-secondary); border: none; padding: 0; cursor: pointer;
+  opacity: 0.5; transition: opacity .2s, transform .2s, background .2s;
+}
+.nav-rail button.active { opacity: 1; transform: scale(1.6); background: var(--gg-yellow); }
+.nav-rail button:hover { opacity: 1; }
+@media (max-width: 768px) { .nav-rail { display: none; } }
+
+/* ============ SCROLL PROGRESS BAR ============ */
+.progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--gg-yellow); width: 0%; z-index: 60;
+  transition: width 0.1s linear;
+}
+
+/* ============ CARDS (shared) ============ */
+.card-light {
+  background: var(--gg-card-light);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-3);
+  border-radius: 4px;
+}
+.card-dark {
+  background: var(--gg-card-dark);
+  color: var(--gg-white);
+  padding: var(--space-3);
+  border-radius: 4px;
+}
+
+{{SECTION_STYLES}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<nav class="nav-rail" id="navRail"></nav>
+<main id="deck">
+{{SECTIONS}}
+</main>
+<script>
+(function() {
+  const sections = document.querySelectorAll('section.snap');
+  const navRail = document.getElementById('navRail');
+  const progress = document.getElementById('progress');
+  sections.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Sekcja ' + (i + 1));
+    b.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+    navRail.appendChild(b);
+  });
+  const dots = navRail.querySelectorAll('button');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        const idx = [...sections].indexOf(e.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => io.observe(s));
+  document.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  }, { passive: true });
+  document.addEventListener('keydown', (e) => {
+    const active = [...dots].findIndex(d => d.classList.contains('active'));
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      sections[Math.min(active + 1, sections.length - 1)].scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      sections[Math.max(active - 1, 0)].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+})();
+</script>
+</body>
+</html>

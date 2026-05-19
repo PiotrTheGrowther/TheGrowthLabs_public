@@ -9,6 +9,7 @@ Open-source artifacts from [TheGrowthLabs](https://thegrowthlabs.io) - an AI-nat
 | Skill | What it does |
 |---|---|
 | [`presentation-builder`](./skills/presentation-builder/) | Turns transcripts, PDFs, markdown, or Notion pages into a single self-contained vertical scroll-snap HTML presentation site. No generic AI aesthetics. |
+| [`growgo-presentation-builder`](./skills/growgo-presentation-builder/) | Growgo-branded variant of `presentation-builder`. Same scroll-site format, with Growgo brand baked in: Roboto, `#FEBF2D` yellow accent, `#EFEFEF` background, yellow-highlight signature, dark/white logo, ekspercka tone. PL + EN auto-detect. |
 
 ### Workflows
 
