@@ -10,6 +10,7 @@ Open-source artifacts from [TheGrowthLabs](https://thegrowthlabs.io) - an AI-nat
 |---|---|
 | [`presentation-builder`](./skills/presentation-builder/) | Turns transcripts, PDFs, markdown, or Notion pages into a single self-contained vertical scroll-snap HTML presentation site. No generic AI aesthetics. |
 | [`growgo-presentation-builder`](./skills/growgo-presentation-builder/) | Growgo-branded variant of `presentation-builder`. Same scroll-site format, with Growgo brand baked in: Roboto, `#FEBF2D` yellow accent, `#EFEFEF` background, yellow-highlight signature, dark/white logo, ekspercka tone. PL + EN auto-detect. |
+| [`ig-opinion-radar`](./skills/ig-opinion-radar/) | Finds Instagram authors who hold a specific opinion (a full sentence, not a keyword) and ranks them by how strongly they endorse it, with cited evidence. Lexical harvest → in-session semantic classification → scored author leaderboard + CSV. Optional one-flag email delivery. Language-agnostic. |
 
 ### Workflows
 
